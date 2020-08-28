@@ -509,7 +509,7 @@ The method for establishing the connection is now given functions for dealing wi
 There are many ways to define the value of an environment variable. One way would be to define it when the application is started:
 
 ```bash
-MONGODB_URI=address_here npm run watch
+MONGODB_URI=address_here npm run dev
 ```
 
 A more sophisticated way is to use the [dotenv](https://github.com/motdotla/dotenv#readme) library. You can install the library with the command:
@@ -797,10 +797,10 @@ app.use(errorHandler)
 The json-parser middleware should be among the very first middleware loaded into Express. If the order was the following:
 
 ```js
-app.use(logger) // request.body is empty!
+app.use(logger) // request.body is undefined!
 
 app.post('/api/notes', (request, response) => {
-  // request.body is empty!
+  // request.body is undefined!
   const body = request.body
   // ...
 })
@@ -808,7 +808,7 @@ app.post('/api/notes', (request, response) => {
 app.use(express.json())
 ```
 
-Then the JSON data sent with the HTTP requests would not be available for the logger middleware or the POST route handler, since the _request.body_ would be an empty object at that point.
+Then the JSON data sent with the HTTP requests would not be available for the logger middleware or the POST route handler, since the _request.body_ would be _undefined_ at that point.
 
 It's also important that the middleware for handling unsupported routes is next to the last middleware that is loaded into Express, just before the error handler.
 
